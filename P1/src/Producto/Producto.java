@@ -5,7 +5,7 @@ public class Producto {
     private int cantidad;
     private double precio;
 
-    /*
+    /**
      * Constructor de la clase Producto
      * 
      * @param nombre el nombre del producto
@@ -18,7 +18,7 @@ public class Producto {
         setPrecio(precio);
     }
 
-    /*
+    /**
      * Asigna el valor del atributo de clase "nombre" con el valor del parámetro
      * 
      * @param nombre el valor entrante
@@ -27,7 +27,7 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    /*
+    /**
      * Asigna el valor del atributo de clase "cantidad" con el valor del parámetro
      * 
      * @param cantidad el valor entrante
@@ -36,7 +36,7 @@ public class Producto {
         this.cantidad = cantidad;
     }
 
-    /*
+    /**
      * Asigna el valor del atributo de clase "precio" con el valor del parámetro
      * 
      * @param precio el valor entrante
@@ -45,7 +45,7 @@ public class Producto {
         this.precio = precio;
     }
 
-    /*
+    /**
      * Devuelve el valor del atributo de clase "nombre"
      * 
      * @return el valor de nombre
@@ -54,7 +54,7 @@ public class Producto {
         return nombre;
     }
 
-    /*
+    /**
      * Devuelve el valor del atributo de clase "cantidad"
      * 
      * @return el valor de cantidad
@@ -63,7 +63,7 @@ public class Producto {
         return cantidad;
     }
 
-    /*
+    /**
      * Devuelve el valor del atributo de clase "precio"
      * 
      * @return el valor de precio
