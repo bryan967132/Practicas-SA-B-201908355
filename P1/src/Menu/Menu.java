@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import Producto.Inventario;
+import Producto.Producto;
+
 public class Menu {
     /**
      * Variable que almacena un mensaje de alerta que se mostrará en el menú.
@@ -24,7 +27,7 @@ public class Menu {
     }};
 
     /**
-     * Método para limpiar la consola dependiendo del sistema operativo
+     * Limpiar la consola dependiendo del sistema operativo
      * 
      * En Windows, ejecuta el comando "cls" en cmd
      * En Linux/macOS, imprime los caracteres de escape ANSI para limpiar la pantalla
@@ -43,7 +46,7 @@ public class Menu {
     }
 
     /**
-     * Método para imprimir un texto en la consola con un color específico
+     * Imprimir un texto en la consola con un color específico
      * 
      * @param color Nombre del color definido en el HashMap "colores"
      * @param texto Texto a imprimir en la consola
@@ -55,7 +58,7 @@ public class Menu {
     }
 
     /**
-     * Método para almacenar un mensaje de alerta en la variable "alerta"
+     * Almacenar un mensaje de alerta en la variable "alerta"
      * Este mensaje se imprimirá en el menú la próxima vez que se muestre
      * 
      * @param color Nombre del color definido en el HashMap "colores"
@@ -66,7 +69,7 @@ public class Menu {
     }
 
     /**
-     * Método para mostrar el menú de opciones en la consola
+     * Mostrar las opciones en la consola
      * Borra la pantalla antes de mostrar las opciones y si hay un mensaje de alerta, lo muestra
      */
     static void mostrarOpciones() {
@@ -92,10 +95,10 @@ public class Menu {
     }
 
     /**
-     * Método que ejecuta el menú cíclico
+     * Muestra el menú cíclico
      * El usuario puede seleccionar opciones del menú hasta que decida salir
      */
-    public static void mostrarMenu() {
+    public static void mostrarMenu(Inventario accion) {
         Scanner sc = new Scanner(System.in);
         int opcion;
 
@@ -105,7 +108,7 @@ public class Menu {
             System.out.print("\nOpción: ");
 
             // Validación de entrada: Se valida que se haya ingresado un número
-            while (!sc.hasNextInt()) {
+            while(!sc.hasNextInt()) {
                 cargarAlerta("Rojo", "\n¡Entrada Inválida!"); // Carga de la alerta
                 mostrarOpciones();
 
@@ -115,21 +118,37 @@ public class Menu {
             }
 
             opcion = sc.nextInt(); // Captura la entrada
+            sc.nextLine();
 
             switch(opcion) {
-                case 1:
+                case 1: // Agregar producto al inventario
+                    limpiarConsola();
+                    imprimir("Azul", "Nuevo Producto");
+                    Producto nuevoProducto = AccionesInventario.obtenerNuevoProducto(sc);
+                    // Validar que se haya creado un nuevo objeto producto
+                    if(nuevoProducto != null) {
+                        if(accion.agregarProducto(nuevoProducto)) {
+                            cargarAlerta("Verde", "\n¡Producto agregado al inventario!");
+                        } else {
+                            cargarAlerta("Amarillo", "\n¡Intentó agregar un producto con un nombre existente en el inventario!");
+                        }
+                    } else {
+                        cargarAlerta("Rojo", "\n¡Ha ocurrido un error al intentar agregar un nuevo producto!");
+                    }
                     break;
-                case 2:
+                case 2: // Eliminar producto del inventario
                     break;
-                case 3:
+                case 3: // Mostrar productos y sus detalles
+                    cargarAlerta("Azul", "\nProductos en Inventario\n" + accion.mostrarProductos());
                     break;
-                case 4:
+                case 4: // Mostrar productos ordenados por precio
+                    cargarAlerta("Azul", "\nProductos Ordenados por Precio\n" + accion.mostrarProductosOrdenados());
                     break;
-                case 5:
+                case 5: // Buscar producto por nombre
                     break;
-                case 6:
+                case 6: // Salir
                     break;
-                default:
+                default: // Opción inválida
                     // Carga de la alerta
                     cargarAlerta("Amarillo", "\n¡Opción inválida!");
             }

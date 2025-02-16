@@ -1,5 +1,8 @@
+import Producto.Inventario;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        Menu.Menu.mostrarMenu();
+        Inventario inventario = new Inventario();
+        Menu.Menu.mostrarMenu(inventario);
     }
 }
