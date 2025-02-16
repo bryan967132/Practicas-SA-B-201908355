@@ -133,20 +133,20 @@ public class Menu {
                         if(accion.agregarProducto(nuevoProducto)) {
                             cargarAlerta("Verde", "\n¡Producto agregado al inventario!");
                         } else {
-                            cargarAlerta("Amarillo", "\n¡Intentó agregar un producto con un nombre existente en el inventario!");
+                            cargarAlerta("Amarillo", "\n¡Intentaste agregar un producto con un nombre existente en el inventario!");
                         }
                     } else {
                         cargarAlerta("Rojo", "\n¡Ha ocurrido un error al intentar agregar un nuevo producto!");
                     }
                     break;
                 case 2: // Eliminar producto del inventario
-                    imprimir("Azul", "Eliminar Producto");
+                    imprimir("Azul", "\nEliminar Producto");
                     System.out.print("Nombre: ");
                     nombre = sc.nextLine();
                     if(accion.eliminarProducto(nombre)) {
-                        cargarAlerta("Azul", "\n¡Producto eliminado del inventario!\n");
+                        cargarAlerta("Azul", "\n¡Producto eliminado del inventario!");
                     } else {
-                        cargarAlerta("Amarillo", "\n¡Intentó eliminar un producto inexistente del inventario!");
+                        cargarAlerta("Amarillo", "\n¡Intentaste eliminar un producto inexistente del inventario!");
                     }
                     break;
                 case 3: // Mostrar productos y sus detalles
@@ -156,14 +156,14 @@ public class Menu {
                     cargarAlerta("Azul", "\nProductos Ordenados por Precio\n" + accion.mostrarProductosOrdenados());
                     break;
                 case 5: // Buscar producto por nombre
-                    imprimir("Azul", "Buscar Producto");
+                    imprimir("Azul", "\nBuscar Producto");
                     System.out.print("Nombre: ");
                     nombre = sc.nextLine();
                     String tabla = accion.buscarProducto(nombre);
                     if(tabla != null) {
                         cargarAlerta("Verde", "\nProducto Buscado\n" + tabla);
                     } else {
-                        cargarAlerta("Amarillo", "\n¡El producto que busca no existe!");
+                        cargarAlerta("Amarillo", "\n¡El producto que buscas no existe!");
                     }
                     break;
                 case 6: // Salir
