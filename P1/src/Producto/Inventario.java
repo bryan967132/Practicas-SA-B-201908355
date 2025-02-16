@@ -3,7 +3,7 @@ package Producto;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Acciones {
+public class Inventario {
 
     // Diccionario para almacenar los productos con su nombre como llave
     private HashMap<String, Producto> productos = new HashMap<>();
@@ -67,7 +67,7 @@ public class Acciones {
         });
 
         // Cierra la tabla
-        tabla.append("╚═" + "═".repeat(columns[0]) + "═╩═" + "═".repeat(columns[1]) + "═╩═" + "═".repeat(columns[2]) + "═╝\n");
+        tabla.append("╚═" + "═".repeat(columns[0]) + "═╩═" + "═".repeat(columns[1]) + "═╩═" + "═".repeat(columns[2]) + "═╝");
         tabla.append("\u001B[0m");
         return tabla.toString(); // Devuelve la tabla completa
     }
@@ -97,7 +97,7 @@ public class Acciones {
         });
 
         // Cierra la tabla
-        tabla.append("╚═" + "═".repeat(columns[0]) + "═╩═" + "═".repeat(columns[1]) + "═╩═" + "═".repeat(columns[2]) + "═╝\n");
+        tabla.append("╚═" + "═".repeat(columns[0]) + "═╩═" + "═".repeat(columns[1]) + "═╩═" + "═".repeat(columns[2]) + "═╝");
         tabla.append("\u001B[0m");
         return tabla.toString(); // Devuelve la tabla completa
     }
@@ -121,7 +121,7 @@ public class Acciones {
 
             // Agrega el producto encontrado a la tabla
             tabla.append(String.format("║ \u001B[0m%-" + (nombre.length() > "Nombre".length() ? nombre.length() : "Nombre".length()) + "s\u001B[32m ║ \u001B[0m%-" + columns[1] + "s\u001B[32m ║ \u001B[0m%-" + columns[2] + ".2f\u001B[32m ║\n", nombre, productoEncontrado.getCantidad(), productoEncontrado.getPrecio()));
-            tabla.append("╚═" + "═".repeat(nombre.length() > "Nombre".length() ? nombre.length() : "Nombre".length()) + "═╩═" + "═".repeat(columns[1]) + "═╩═" + "═".repeat(columns[2]) + "═╝\n");
+            tabla.append("╚═" + "═".repeat(nombre.length() > "Nombre".length() ? nombre.length() : "Nombre".length()) + "═╩═" + "═".repeat(columns[1]) + "═╩═" + "═".repeat(columns[2]) + "═╝");
             tabla.append("\u001B[0m");
             return tabla.toString(); // Devuelve la tabla con el producto encontrado
         }
