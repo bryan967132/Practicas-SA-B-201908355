@@ -95,8 +95,10 @@ public class Menu {
     }
 
     /**
-     * Muestra el menú cíclico
-     * El usuario puede seleccionar opciones del menú hasta que decida salir
+     * Muestra el menú cíclico con el que el usuario interactúa
+     * El usuario puede seleccionar opciones del menú como agregar, eliminar, mostrar, ordenar y buscar hasta que decida salir
+     * 
+     * @param accion Objeto de tipo inventario para gestionar los productos
      */
     public static void mostrarMenu(Inventario accion) {
         Scanner sc = new Scanner(System.in);
