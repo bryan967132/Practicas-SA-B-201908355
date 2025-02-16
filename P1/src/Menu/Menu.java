@@ -101,6 +101,7 @@ public class Menu {
     public static void mostrarMenu(Inventario accion) {
         Scanner sc = new Scanner(System.in);
         int opcion;
+        String nombre;
 
         do {
             mostrarOpciones();
@@ -137,6 +138,14 @@ public class Menu {
                     }
                     break;
                 case 2: // Eliminar producto del inventario
+                    imprimir("Azul", "Eliminar Producto");
+                    System.out.print("Nombre: ");
+                    nombre = sc.nextLine();
+                    if(accion.eliminarProducto(nombre)) {
+                        cargarAlerta("Azul", "\n¡Producto eliminado del inventario!\n");
+                    } else {
+                        cargarAlerta("Amarillo", "\n¡Intentó eliminar un producto inexistente del inventario!");
+                    }
                     break;
                 case 3: // Mostrar productos y sus detalles
                     cargarAlerta("Azul", "\nProductos en Inventario\n" + accion.mostrarProductos());
@@ -145,6 +154,15 @@ public class Menu {
                     cargarAlerta("Azul", "\nProductos Ordenados por Precio\n" + accion.mostrarProductosOrdenados());
                     break;
                 case 5: // Buscar producto por nombre
+                    imprimir("Azul", "Buscar Producto");
+                    System.out.print("Nombre: ");
+                    nombre = sc.nextLine();
+                    String tabla = accion.buscarProducto(nombre);
+                    if(tabla != null) {
+                        cargarAlerta("Verde", "\nProducto Buscado\n" + tabla);
+                    } else {
+                        cargarAlerta("Amarillo", "\n¡El producto que busca no existe!");
+                    }
                     break;
                 case 6: // Salir
                     break;

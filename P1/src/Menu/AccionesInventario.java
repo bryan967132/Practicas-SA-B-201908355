@@ -34,9 +34,9 @@ public class AccionesInventario {
             System.out.print("Nombre: ");
             String nombre = sc.nextLine();
 
-            int cantidad = leerEntero(sc, "Cantidad: ", "¡Cantidad Inválida");
+            int cantidad = leerEntero(sc, "Cantidad: ", "¡Cantidad Inválida!");
 
-            double precio = leerDecimal(sc, "Precio: ", "¡Precio Inválida");
+            double precio = leerDecimal(sc, "Precio: ", "¡Precio Inválida!");
 
             return new Producto(nombre, cantidad, precio);
         } catch (Exception e) {
