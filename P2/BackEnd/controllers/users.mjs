@@ -85,7 +85,6 @@ export const login = async (req, res) => {
             } else {
                 res.status(400).json({ status: "warning", message: "¡Contraseña incorrecta" });
             }
-
         } else {
             res.status(400).json({ status: "warning", message: "¡Usuario no encontrado" });
         }

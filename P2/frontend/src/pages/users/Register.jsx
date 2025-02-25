@@ -31,12 +31,13 @@ export default function Register() {
             body: JSON.stringify({ name, username, password }),
         })
 
-        const data = await response.json()
+        const data = await response.json();
         if(data.status === 'success') {
-            navigate("/")
+            navigate("/");
         } else {
-            setUsername('')
+            setUsername('');
         }
+
         Swal.fire({
             icon: data.status,
             title: data.status === 'success' ? 'Registro Exitoso' : (data.status === 'warning' ? 'Alerta' : 'Error'),

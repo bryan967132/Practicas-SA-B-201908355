@@ -5,11 +5,11 @@ import Swal from 'sweetalert2';
 
 export default function Login() {
     const navigate = useNavigate();
-    const [userEmail, setUserEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const handleUsernameChange = (event) => {
-        setUserEmail(event.target.value)
+        setUsername(event.target.value)
     }
 
     const handlePasswordChange = (event) => {
@@ -18,7 +18,24 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // enviar
+
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/login?username=${username}&password=${password}`, {
+            method: "GET",
+            credentials: "include",
+        })
+
+        const data = await response.json();
+        if(data.status === 'success') {
+            navigate("/home");
+        }
+
+        Swal.fire({
+            icon: data.status,
+            title: data.status === 'success' ? 'Inicio Exitoso' : (data.status === 'warning' ? 'Alerta' : 'Error'),
+            text: data.message,
+            timer: 2000,
+            timerProgressBar: true,
+        });
     };
 
     return (
@@ -48,7 +65,7 @@ export default function Login() {
                     label="Usuario"
                     name="usuario"
                     autoComplete="usuario"
-                    value={userEmail}
+                    value={username}
                     onChange={handleUsernameChange}
                     autoFocus
                     InputLabelProps={{
