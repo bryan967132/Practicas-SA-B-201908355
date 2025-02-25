@@ -26,14 +26,19 @@ export default function Home() {
 
             const data = await response.json();
 
-            console.log({ name, username })
             if (data.status === 'error') {
-                await fetch(`${import.meta.env.VITE_API_HOST}/refreshToken`, {
-                    method: "POST",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, username }),
-                });
+                console.log('TOKEN EXPIRADO');
+
+                setTimeout(async () => {
+                    await fetch(`${import.meta.env.VITE_API_HOST}/refreshToken`, {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ name, username }),
+                    });
+                    console.log('TOKEN RENOVADO');
+                }, import.meta.env.VITE_TIME_REFRESH * 1000);
+
             } else {
                 setName(data.name);
                 setUsername(data.username);
@@ -64,7 +69,7 @@ export default function Home() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        minHeight: '100vh',
+                        minHeight: '98vh',
                         bgcolor: '#1e293a',
                         boxShadow: 3,
                         p: 3,
