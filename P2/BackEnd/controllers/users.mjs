@@ -57,7 +57,7 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const { username, password } = req.query;
+    const { username, password } = req.body;
 
     try {
         const encryptedUsername = aesEncrypt(username);
@@ -68,16 +68,18 @@ export const login = async (req, res) => {
             const encryptedPassword = aesEncrypt(password);
 
             if(user.password === encryptedPassword) {
+                const time = `${process.env.EXPIRE_TOKEN}s`
+
                 const token = jwt.sign(
                     { name: user.name, username: encryptedUsername },
                     process.env.JWT_SECRET,
-                    { expiresIn: `${process.env.EXPIRE_TOKEN}s` },
+                    { expiresIn: time },
                 );
 
                 res.cookie("token", token, {
                     httpOnly: true,
-                    secure: false,
-                    sameSite: "Strict",
+                    secure: true,
+                    sameSite: "none",
                     maxAge: process.env.EXPIRE_TOKEN * 1000,
                 });
 
@@ -95,11 +97,25 @@ export const login = async (req, res) => {
 };
 
 export const validateToken = async (req, res) => {
-    const token = req.cookies.token;
-    if(!token) return res.status(401).json({ message: "No autorizado" });
+    try {
+        const token = req.cookies.token;
+        if(!token) return res.status(401).json({ status: "error", message: "No autorizado" });
+    
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) return res.status(403).json({ status: "error", message: "Token inválido" });
+            res.status(200).json({ status: "success", name: aesDecrypt(decoded.name), username: aesDecrypt(decoded.username) });
+        });
+        
+    } catch (error) {
+        console.log(error)
+    }
+};
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) return res.status(403).json({ message: "Token inválido" });
-        res.json({ name: aesDecrypt(decoded.name), username: aesDecrypt(decoded.username) });
+export const logout = (_, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
     });
-}
+    res.status(200).json({ status: "success", message: "¡Sesión cerrada!" });
+};

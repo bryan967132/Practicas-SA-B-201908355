@@ -10,12 +10,11 @@ const app = express();
 
 app.use(cookieParser());
 
+console.log(process.env.HOST_FRONTEND)
+
 app.use(cors({
     origin: process.env.HOST_FRONTEND,
     credentials: true,
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Authorization'],
 }));
 
 app.use(express.json());

@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Typography, Card } from "@mui/material";
 
 export default function Home() {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        // Eliminar token o datos de sesión
-        localStorage.removeItem("token");
+    const handleLogout = async () => {
+        await fetch(`${import.meta.env.VITE_API_HOST}/logout`, {
+            method: "POST",
+            credentials: "include",
+        });
 
-        // Redirigir al login
         navigate("/");
     };
+
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            const response = await fetch(`${import.meta.env.VITE_API_HOST}/validateToken`, {
+                method: "GET",
+                credentials: "include",
+            });
+
+            const data = await response.json();
+
+            if(data.status === 'error') {
+                navigate("/")
+            }
+        }, 1000);
+
+        return () => clearInterval(interval)
+    }, [navigate]);
 
     return (
         <Container

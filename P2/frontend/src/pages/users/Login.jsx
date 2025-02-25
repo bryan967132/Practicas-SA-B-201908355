@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axios from 'axios'
 
 export default function Login() {
     const navigate = useNavigate();
@@ -19,12 +20,15 @@ export default function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch(`${import.meta.env.VITE_API_HOST}/login?username=${username}&password=${password}`, {
-            method: "GET",
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/login`, {
+            method: "POST",
             credentials: "include",
-        })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+        });
 
         const data = await response.json();
+
         if(data.status === 'success') {
             navigate("/home");
         }
