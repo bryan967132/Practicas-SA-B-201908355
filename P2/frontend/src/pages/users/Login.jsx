@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import axios from 'axios'
 
 export default function Login() {
     const navigate = useNavigate();

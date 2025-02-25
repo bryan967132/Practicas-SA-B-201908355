@@ -68,12 +68,10 @@ export const login = async (req, res) => {
             const encryptedPassword = aesEncrypt(password);
 
             if(user.password === encryptedPassword) {
-                const time = `${process.env.EXPIRE_TOKEN}s`
-
                 const token = jwt.sign(
                     { name: user.name, username: encryptedUsername },
                     process.env.JWT_SECRET,
-                    { expiresIn: time },
+                    { expiresIn: `${process.env.EXPIRE_TOKEN}s` },
                 );
 
                 res.cookie("token", token, {
@@ -118,4 +116,28 @@ export const logout = (_, res) => {
         sameSite: "none",
     });
     res.status(200).json({ status: "success", message: "¡Sesión cerrada!" });
+};
+
+export const refreshToken = (req, res) => {
+    try {
+        const { name, username } = req.body;
+
+        const token = jwt.sign(
+            { name: aesEncrypt(name), username: aesEncrypt(username) },
+            process.env.JWT_SECRET,
+            { expiresIn: `${process.env.EXPIRE_TOKEN}s` },
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: process.env.EXPIRE_TOKEN * 1000,
+        });
+
+        res.status(200).json({ status: "success", message: `¡Token refrescado!` });
+    } catch(error) {
+        console.log(error)
+        res.status(400).json({ status: "error", message: "¡Error en el servidor!" })
+    }
 };
