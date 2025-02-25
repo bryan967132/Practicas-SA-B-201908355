@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Login() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: '100vh',
+                minHeight: '98vh',
                 bgcolor: '#1e293a',
                 boxShadow: 3,
                 p: 3,
@@ -93,7 +93,7 @@ export default function Login() {
                     fullWidth
                     variant="outlined"
                     sx={{ mt: 3, mb: 2, color: '#fff', borderColor: '#3f4a61', ':hover': { borderColor: '#fff' } }}
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/register")}
                 >
                     Create Account
                 </Button>

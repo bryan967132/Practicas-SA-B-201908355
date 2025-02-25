@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Box, Button, TextField, Typography, Container, MenuItem, Select, InputLabel, FormControl } from '@mui/material'
+import { Box, Button, TextField, Typography, Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
-export default function Signup() {
+export default function Register() {
     const navigate = useNavigate()
     const [name, setName] = useState('')
     const [username, setUsername] = useState('')
@@ -19,12 +19,31 @@ export default function Signup() {
 
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
-        setPasswordMatch(event.target.value === confirmPassword)
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // enviar
+
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/register`, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, username, password }),
+        })
+
+        const data = await response.json()
+        if(data.status === 'success') {
+            navigate("/")
+        } else {
+            setUsername('')
+        }
+        Swal.fire({
+            icon: data.status,
+            title: data.status === 'success' ? 'Registro Exitoso' : (data.status === 'warning' ? 'Alerta' : 'Error'),
+            text: data.message,
+            timer: 2000,
+            timerProgressBar: true,
+        });
     }
 
     return (
@@ -36,7 +55,7 @@ export default function Signup() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: '100vh',
+                minHeight: '98vh',
                 bgcolor: '#1e293a',
                 boxShadow: 3,
                 p: 3,
